@@ -19,7 +19,7 @@
     },
     "require-dev": {
         "puli/cli": "~1.0",
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^4.6"
     },
     "minimum-stability": "dev",
     "autoload": {
