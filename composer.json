@@ -14,10 +14,12 @@
         "php": ">=5.3.9",
         "puli/repository": "1.0.*",
         "puli/discovery": "~1.0",
+        "puli/composer-plugin": "~1.0",
         "webmozart/glob": "~2.0"
     },
     "require-dev": {
-        "puli/cli": "~1.0"
+        "puli/cli": "~1.0",
+        "phpunit/phpunit": "^4.8"
     },
     "minimum-stability": "dev",
     "autoload": {

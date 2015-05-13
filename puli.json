@@ -17,8 +17,60 @@
         }
     },
     "packages": {
+        "doctrine/instantiator": {
+            "install-path": "vendor/doctrine/instantiator",
+            "installer": "composer"
+        },
+        "herrera-io/json": {
+            "install-path": "vendor/herrera-io/json",
+            "installer": "composer"
+        },
+        "herrera-io/phar-update": {
+            "install-path": "vendor/herrera-io/phar-update",
+            "installer": "composer"
+        },
+        "herrera-io/version": {
+            "install-path": "vendor/herrera-io/version",
+            "installer": "composer"
+        },
         "justinrainbow/json-schema": {
             "install-path": "vendor/justinrainbow/json-schema",
+            "installer": "composer"
+        },
+        "phpdocumentor/reflection-docblock": {
+            "install-path": "vendor/phpdocumentor/reflection-docblock",
+            "installer": "composer"
+        },
+        "phpspec/prophecy": {
+            "install-path": "vendor/phpspec/prophecy",
+            "installer": "composer"
+        },
+        "phpunit/php-code-coverage": {
+            "install-path": "vendor/phpunit/php-code-coverage",
+            "installer": "composer"
+        },
+        "phpunit/php-file-iterator": {
+            "install-path": "vendor/phpunit/php-file-iterator",
+            "installer": "composer"
+        },
+        "phpunit/php-text-template": {
+            "install-path": "vendor/phpunit/php-text-template",
+            "installer": "composer"
+        },
+        "phpunit/php-timer": {
+            "install-path": "vendor/phpunit/php-timer",
+            "installer": "composer"
+        },
+        "phpunit/php-token-stream": {
+            "install-path": "vendor/phpunit/php-token-stream",
+            "installer": "composer"
+        },
+        "phpunit/phpunit": {
+            "install-path": "vendor/phpunit/phpunit",
+            "installer": "composer"
+        },
+        "phpunit/phpunit-mock-objects": {
+            "install-path": "vendor/phpunit/phpunit-mock-objects",
             "installer": "composer"
         },
         "psr/log": {
@@ -49,8 +101,36 @@
             "install-path": "vendor/puli/repository",
             "installer": "composer"
         },
-        "rhumsaa/uuid": {
-            "install-path": "vendor/rhumsaa/uuid",
+        "ramsey/uuid": {
+            "install-path": "vendor/ramsey/uuid",
+            "installer": "composer"
+        },
+        "sebastian/comparator": {
+            "install-path": "vendor/sebastian/comparator",
+            "installer": "composer"
+        },
+        "sebastian/diff": {
+            "install-path": "vendor/sebastian/diff",
+            "installer": "composer"
+        },
+        "sebastian/environment": {
+            "install-path": "vendor/sebastian/environment",
+            "installer": "composer"
+        },
+        "sebastian/exporter": {
+            "install-path": "vendor/sebastian/exporter",
+            "installer": "composer"
+        },
+        "sebastian/global-state": {
+            "install-path": "vendor/sebastian/global-state",
+            "installer": "composer"
+        },
+        "sebastian/recursion-context": {
+            "install-path": "vendor/sebastian/recursion-context",
+            "installer": "composer"
+        },
+        "sebastian/version": {
+            "install-path": "vendor/sebastian/version",
             "installer": "composer"
         },
         "seld/jsonlint": {
@@ -71,6 +151,10 @@
         },
         "symfony/process": {
             "install-path": "vendor/symfony/process",
+            "installer": "composer"
+        },
+        "symfony/yaml": {
+            "install-path": "vendor/symfony/yaml",
             "installer": "composer"
         },
         "webmozart/assert": {
