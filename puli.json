@@ -11,7 +11,7 @@
                 },
                 "server": {
                     "description": "The name of the server that serves the resource",
-                    "default": "default"
+                    "required": true
                 }
             }
         }
@@ -21,20 +21,16 @@
             "install-path": "vendor/doctrine/instantiator",
             "installer": "composer"
         },
-        "herrera-io/json": {
-            "install-path": "vendor/herrera-io/json",
-            "installer": "composer"
-        },
-        "herrera-io/phar-update": {
-            "install-path": "vendor/herrera-io/phar-update",
-            "installer": "composer"
-        },
-        "herrera-io/version": {
-            "install-path": "vendor/herrera-io/version",
-            "installer": "composer"
-        },
         "justinrainbow/json-schema": {
             "install-path": "vendor/justinrainbow/json-schema",
+            "installer": "composer"
+        },
+        "padraic/humbug_get_contents": {
+            "install-path": "vendor/padraic/humbug_get_contents",
+            "installer": "composer"
+        },
+        "padraic/phar-updater": {
+            "install-path": "vendor/padraic/phar-updater",
             "installer": "composer"
         },
         "phpdocumentor/reflection-docblock": {
@@ -87,10 +83,6 @@
         },
         "puli/discovery": {
             "install-path": "vendor/puli/discovery",
-            "installer": "composer"
-        },
-        "puli/factory": {
-            "install-path": "vendor/puli/factory",
             "installer": "composer"
         },
         "puli/manager": {
@@ -147,6 +139,10 @@
         },
         "symfony/filesystem": {
             "install-path": "vendor/symfony/filesystem",
+            "installer": "composer"
+        },
+        "symfony/finder": {
+            "install-path": "vendor/symfony/finder",
             "installer": "composer"
         },
         "symfony/process": {
