@@ -73,7 +73,7 @@ class DiscoveryUrlGenerator implements UrlGenerator
 
         if (0 === $count) {
             throw new CannotGenerateUrlException(sprintf(
-                'No asset mapping exists for path "%s".',
+                'Cannot generate URL for "%s". The path is not public.',
                 $repositoryPath
             ));
         }
