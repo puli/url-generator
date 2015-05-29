@@ -17,8 +17,6 @@ use Puli\Discovery\Api\Binding\BindingParameter;
 use Puli\Discovery\Api\Binding\BindingType;
 use Puli\Discovery\Api\ResourceDiscovery;
 use Puli\Discovery\Binding\EagerBinding;
-use Puli\Manager\Api\Package\Package;
-use Puli\Manager\Api\Package\PackageFile;
 use Puli\Repository\Api\ResourceCollection;
 use Puli\Repository\Resource\Collection\ArrayResourceCollection;
 use Puli\Repository\Resource\GenericResource;
@@ -41,11 +39,6 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
     private $generator;
 
     /**
-     * @var Package
-     */
-    private $package;
-
-    /**
      * @var BindingType
      */
     private $bindingType;
@@ -62,7 +55,6 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
             'localhost' => '/%s',
             'example.com' => 'https://example.com/%s',
         ));
-        $this->package = new Package(new PackageFile('vendor/package'), '/path');
         $this->bindingType = new BindingType(DiscoveryUrlGenerator::BINDING_TYPE, array(
             new BindingParameter(DiscoveryUrlGenerator::SERVER_PARAMETER),
             new BindingParameter(DiscoveryUrlGenerator::PATH_PARAMETER),

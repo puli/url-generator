@@ -17,8 +17,6 @@
         "webmozart/glob": "~2.0"
     },
     "require-dev": {
-        "puli/cli": "~1.0",
-        "puli/composer-plugin": "~1.0",
         "phpunit/phpunit": "^4.6"
     },
     "minimum-stability": "dev",
