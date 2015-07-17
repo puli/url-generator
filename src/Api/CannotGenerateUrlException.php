@@ -17,6 +17,7 @@ use Exception;
  * Thrown when a URL cannot be generated.
  *
  * @since  1.0
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 class CannotGenerateUrlException extends Exception

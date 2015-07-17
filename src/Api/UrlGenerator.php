@@ -15,6 +15,7 @@ namespace Puli\UrlGenerator\Api;
  * Generates URLs for Puli assets.
  *
  * @since  1.0
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 interface UrlGenerator

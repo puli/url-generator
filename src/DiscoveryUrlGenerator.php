@@ -13,14 +13,15 @@ namespace Puli\UrlGenerator;
 
 use Puli\Discovery\Api\Binding\ResourceBinding;
 use Puli\Discovery\Api\ResourceDiscovery;
-use Puli\UrlGenerator\Api\UrlGenerator;
 use Puli\UrlGenerator\Api\CannotGenerateUrlException;
+use Puli\UrlGenerator\Api\UrlGenerator;
 use Webmozart\Glob\Glob;
 
 /**
  * A resource URL generator that uses a {@link ResourceDiscovery} as backend.
  *
  * @since  1.0
+ *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 class DiscoveryUrlGenerator implements UrlGenerator
