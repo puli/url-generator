@@ -11,8 +11,8 @@
 
 namespace Puli\UrlGenerator;
 
-use Puli\Discovery\Api\Binding\ResourceBinding;
-use Puli\Discovery\Api\ResourceDiscovery;
+use Puli\Discovery\Api\Discovery;
+use Puli\Discovery\Binding\ResourceBinding;
 use Puli\UrlGenerator\Api\CannotGenerateUrlException;
 use Puli\UrlGenerator\Api\UrlGenerator;
 use Webmozart\Glob\Glob;
@@ -42,7 +42,7 @@ class DiscoveryUrlGenerator implements UrlGenerator
     const PATH_PARAMETER = 'path';
 
     /**
-     * @var ResourceDiscovery
+     * @var Discovery
      */
     private $discovery;
 
@@ -54,11 +54,10 @@ class DiscoveryUrlGenerator implements UrlGenerator
     /**
      * Creates the URL generator.
      *
-     * @param ResourceDiscovery $discovery  The resource discovery.
-     * @param string[]          $urlFormats The URL formats indexed by the
-     *                                      server names.
+     * @param Discovery $discovery  The resource discovery.
+     * @param string[]  $urlFormats The URL formats indexed by the server names.
      */
-    public function __construct(ResourceDiscovery $discovery, array $urlFormats)
+    public function __construct(Discovery $discovery, array $urlFormats)
     {
         $this->discovery = $discovery;
         $this->urlFormats = $urlFormats;
@@ -69,10 +68,18 @@ class DiscoveryUrlGenerator implements UrlGenerator
      */
     public function generateUrl($repositoryPath, $currentUrl = null)
     {
-        $bindings = $this->discovery->findByPath($repositoryPath, self::BINDING_TYPE);
-        $count = count($bindings);
+        $matchedBinding = null;
+        $bindings = $this->discovery->findBindings(self::BINDING_TYPE);
 
-        if (0 === $count) {
+        foreach ($bindings as $binding) {
+            /** @var ResourceBinding $binding */
+            if (Glob::match($repositoryPath, $binding->getQuery())) {
+                $matchedBinding = $binding;
+                break;
+            }
+        }
+
+        if (null === $matchedBinding) {
             throw new CannotGenerateUrlException(sprintf(
                 'Cannot generate URL for "%s". The path is not public.',
                 $repositoryPath
@@ -82,7 +89,7 @@ class DiscoveryUrlGenerator implements UrlGenerator
         // We can't prevent a resource to be mapped to more than one public path
         // For now, we'll just take the first one and make the user responsible
         // for preventing duplicates
-        $url = $this->generateUrlForBinding(reset($bindings), $repositoryPath);
+        $url = $this->generateUrlForBinding($matchedBinding, $repositoryPath);
 
         if ($currentUrl) {
             // TODO use Url::makeRelative() once it exists

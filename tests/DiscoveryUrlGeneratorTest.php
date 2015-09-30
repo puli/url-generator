@@ -13,10 +13,10 @@ namespace Puli\UrlGenerator\Tests;
 
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
-use Puli\Discovery\Api\Binding\BindingParameter;
-use Puli\Discovery\Api\Binding\BindingType;
-use Puli\Discovery\Api\ResourceDiscovery;
-use Puli\Discovery\Binding\EagerBinding;
+use Puli\Discovery\Api\Discovery;
+use Puli\Discovery\Api\Type\BindingParameter;
+use Puli\Discovery\Api\Type\BindingType;
+use Puli\Discovery\Binding\ResourceBinding;
 use Puli\Repository\Api\ResourceCollection;
 use Puli\Repository\Resource\Collection\ArrayResourceCollection;
 use Puli\Repository\Resource\GenericResource;
@@ -30,7 +30,7 @@ use Puli\UrlGenerator\DiscoveryUrlGenerator;
 class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject|ResourceDiscovery
+     * @var PHPUnit_Framework_MockObject_MockObject|Discovery
      */
     private $discovery;
 
@@ -51,7 +51,7 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->discovery = $this->getMock('Puli\Discovery\Api\ResourceDiscovery');
+        $this->discovery = $this->getMock('Puli\Discovery\Api\Discovery');
         $this->generator = new DiscoveryUrlGenerator($this->discovery, array(
             'localhost' => '/%s',
             'example.com' => 'https://example.com/%s',
@@ -65,10 +65,9 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 
     public function testGenerateUrl()
     {
-        $binding = new EagerBinding(
+        $binding = new ResourceBinding(
             '/path/css{,/**/*}',
-            $this->resources,
-            $this->bindingType,
+            DiscoveryUrlGenerator::BINDING_TYPE,
             array(
                 DiscoveryUrlGenerator::SERVER_PARAMETER => 'localhost',
                 DiscoveryUrlGenerator::PATH_PARAMETER => 'css',
@@ -76,19 +75,45 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
         );
 
         $this->discovery->expects($this->once())
-            ->method('findByPath')
-            ->with('/path/css/style.css', DiscoveryUrlGenerator::BINDING_TYPE)
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
             ->willReturn(array($binding));
+
+        $this->assertSame('/css/style.css', $this->generator->generateUrl('/path/css/style.css'));
+    }
+
+    public function testGenerateUrlTakesFirstMatchingBinding()
+    {
+        $binding1 = new ResourceBinding(
+            '/path/js{,/**/*}',
+            DiscoveryUrlGenerator::BINDING_TYPE
+        );
+        $binding2 = new ResourceBinding(
+            '/path/css{,/**/*}',
+            DiscoveryUrlGenerator::BINDING_TYPE,
+            array(
+                DiscoveryUrlGenerator::SERVER_PARAMETER => 'localhost',
+                DiscoveryUrlGenerator::PATH_PARAMETER => 'css',
+            )
+        );
+        $binding3 = new ResourceBinding(
+            '/path/css{,/**/*}',
+            DiscoveryUrlGenerator::BINDING_TYPE
+        );
+
+        $this->discovery->expects($this->once())
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
+            ->willReturn(array($binding1, $binding2, $binding3));
 
         $this->assertSame('/css/style.css', $this->generator->generateUrl('/path/css/style.css'));
     }
 
     public function testGenerateUrlWithDomain()
     {
-        $binding = new EagerBinding(
+        $binding = new ResourceBinding(
             '/path/css{,/**/*}',
-            $this->resources,
-            $this->bindingType,
+            DiscoveryUrlGenerator::BINDING_TYPE,
             array(
                 DiscoveryUrlGenerator::SERVER_PARAMETER => 'example.com',
                 DiscoveryUrlGenerator::PATH_PARAMETER => 'css',
@@ -96,8 +121,8 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
         );
 
         $this->discovery->expects($this->once())
-            ->method('findByPath')
-            ->with('/path/css/style.css', DiscoveryUrlGenerator::BINDING_TYPE)
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
             ->willReturn(array($binding));
 
         $this->assertSame('https://example.com/css/style.css', $this->generator->generateUrl('/path/css/style.css'));
@@ -105,10 +130,9 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 
     public function testAcceptWebPathWithLeadingSlash()
     {
-        $binding = new EagerBinding(
+        $binding = new ResourceBinding(
             '/path/css{,/**/*}',
-            $this->resources,
-            $this->bindingType,
+            DiscoveryUrlGenerator::BINDING_TYPE,
             array(
                 DiscoveryUrlGenerator::SERVER_PARAMETER => 'localhost',
                 DiscoveryUrlGenerator::PATH_PARAMETER => '/css',
@@ -116,8 +140,8 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
         );
 
         $this->discovery->expects($this->once())
-            ->method('findByPath')
-            ->with('/path/css/style.css', DiscoveryUrlGenerator::BINDING_TYPE)
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
             ->willReturn(array($binding));
 
         $this->assertSame('/css/style.css', $this->generator->generateUrl('/path/css/style.css'));
@@ -125,10 +149,9 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 
     public function testAcceptWebPathWithTrailingSlash()
     {
-        $binding = new EagerBinding(
+        $binding = new ResourceBinding(
             '/path/css{,/**/*}',
-            $this->resources,
-            $this->bindingType,
+            DiscoveryUrlGenerator::BINDING_TYPE,
             array(
                 DiscoveryUrlGenerator::SERVER_PARAMETER => 'localhost',
                 DiscoveryUrlGenerator::PATH_PARAMETER => 'css/',
@@ -136,8 +159,8 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
         );
 
         $this->discovery->expects($this->once())
-            ->method('findByPath')
-            ->with('/path/css/style.css', DiscoveryUrlGenerator::BINDING_TYPE)
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
             ->willReturn(array($binding));
 
         $this->assertSame('/css/style.css', $this->generator->generateUrl('/path/css/style.css'));
@@ -145,10 +168,9 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 
     public function testOnlyReplacePrefix()
     {
-        $binding = new EagerBinding(
+        $binding = new ResourceBinding(
             '/path{,/**/*}',
-            $this->resources,
-            $this->bindingType,
+            DiscoveryUrlGenerator::BINDING_TYPE,
             array(
                 DiscoveryUrlGenerator::SERVER_PARAMETER => 'localhost',
                 DiscoveryUrlGenerator::PATH_PARAMETER => '/css',
@@ -156,8 +178,8 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
         );
 
         $this->discovery->expects($this->once())
-            ->method('findByPath')
-            ->with('/path/path/style.css', DiscoveryUrlGenerator::BINDING_TYPE)
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
             ->willReturn(array($binding));
 
         $this->assertSame('/css/path/style.css', $this->generator->generateUrl('/path/path/style.css'));
@@ -170,8 +192,8 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
     public function testFailIfResourceNotMapped()
     {
         $this->discovery->expects($this->once())
-            ->method('findByPath')
-            ->with('/path/path/style.css', DiscoveryUrlGenerator::BINDING_TYPE)
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
             ->willReturn(array());
 
         $this->generator->generateUrl('/path/path/style.css');
@@ -183,10 +205,9 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
      */
     public function testFailIfServerNotFound()
     {
-        $binding = new EagerBinding(
+        $binding = new ResourceBinding(
             '/path{,/**/*}',
-            $this->resources,
-            $this->bindingType,
+            DiscoveryUrlGenerator::BINDING_TYPE,
             array(
                 DiscoveryUrlGenerator::SERVER_PARAMETER => 'foobar',
                 DiscoveryUrlGenerator::PATH_PARAMETER => '/css',
@@ -194,8 +215,8 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
         );
 
         $this->discovery->expects($this->once())
-            ->method('findByPath')
-            ->with('/path/path/style.css', DiscoveryUrlGenerator::BINDING_TYPE)
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
             ->willReturn(array($binding));
 
         $this->generator->generateUrl('/path/path/style.css');
