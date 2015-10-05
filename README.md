@@ -1,9 +1,9 @@
 The Puli URL Generator Component
 ================================
 
-[![Build Status](https://travis-ci.org/puli/url-generator.svg?branch=master)](https://travis-ci.org/puli/url-generator)
+[![Build Status](https://travis-ci.org/puli/url-generator.svg?branch=1.0.0-beta3)](https://travis-ci.org/puli/url-generator)
 [![Build status](https://ci.appveyor.com/api/projects/status/x7qpeo9er78ftxk0/branch/master?svg=true)](https://ci.appveyor.com/project/webmozart/url-generator/branch/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/puli/url-generator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/puli/url-generator/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/puli/url-generator/badges/quality-score.png?b=1.0.0-beta3)](https://scrutinizer-ci.com/g/puli/url-generator/?branch=1.0.0-beta3)
 [![Latest Stable Version](https://poser.pugx.org/puli/url-generator/v/stable.svg)](https://packagist.org/packages/puli/url-generator)
 [![Total Downloads](https://poser.pugx.org/puli/url-generator/downloads.svg)](https://packagist.org/packages/puli/url-generator)
 [![Dependency Status](https://www.versioneye.com/php/puli:url-generator/1.0.0/badge.svg)](https://www.versioneye.com/php/puli:url-generator/1.0.0)
