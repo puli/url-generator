@@ -11,11 +11,13 @@
 
 namespace Puli\UrlGenerator;
 
+use InvalidArgumentException;
 use Puli\Discovery\Api\Discovery;
 use Puli\Discovery\Binding\ResourceBinding;
 use Puli\UrlGenerator\Api\CannotGenerateUrlException;
 use Puli\UrlGenerator\Api\UrlGenerator;
 use Webmozart\Glob\Glob;
+use Webmozart\PathUtil\Url;
 
 /**
  * A resource URL generator that uses a {@link ResourceDiscovery} as backend.
@@ -92,7 +94,14 @@ class DiscoveryUrlGenerator implements UrlGenerator
         $url = $this->generateUrlForBinding($matchedBinding, $repositoryPath);
 
         if ($currentUrl) {
-            // TODO use Url::makeRelative() once it exists
+            try {
+                $url = Url::makeRelative($url, $currentUrl);
+            } catch (InvalidArgumentException $e) {
+                throw new CannotGenerateUrlException(sprintf(
+                    'Cannot generate URL for "%s".',
+                    $repositoryPath
+                ), $e->getCode(), $e);
+            }
         }
 
         return $url;
