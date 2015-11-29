@@ -223,7 +223,7 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DiscoveryUrlGenerator::generateUrl
+     * @covers \Puli\UrlGenerator\DiscoveryUrlGenerator::generateUrl
      */
     public function testGenerateUrlRelativeUrl()
     {
@@ -247,7 +247,7 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException \Puli\UrlGenerator\Api\CannotGenerateUrlException
      * @expectedExceptionMessage Cannot generate URL for "/path/path/style.css" to current url "/".
-     * @covers DiscoveryUrlGenerator::generateUrl
+     * @covers \Puli\UrlGenerator\DiscoveryUrlGenerator::generateUrl
      */
     public function testMakeRelativeFails()
     {
