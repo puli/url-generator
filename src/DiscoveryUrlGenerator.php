@@ -98,8 +98,8 @@ class DiscoveryUrlGenerator implements UrlGenerator
                 $url = Url::makeRelative($url, $currentUrl);
             } catch (InvalidArgumentException $e) {
                 throw new CannotGenerateUrlException(sprintf(
-                    'Cannot generate URL for "%s".',
-                    $repositoryPath
+                    'Cannot generate URL for "%s" to current url "%s".',
+                    $repositoryPath, $currentUrl
                 ), $e->getCode(), $e);
             }
         }
