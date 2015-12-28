@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.9",
+        "php": "^5.3.9|^7.0",
         "puli/repository": "1.0.*",
         "puli/discovery": "^1.0.0-beta8",
         "webmozart/glob": ">=2.0,<4.0",
