@@ -221,4 +221,50 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 
         $this->generator->generateUrl('/path/path/style.css');
     }
+
+    /**
+     * @covers \Puli\UrlGenerator\DiscoveryUrlGenerator::generateUrl
+     */
+    public function testGenerateUrlRelativeUrl()
+    {
+        $binding = new ResourceBinding(
+            '/path{,/**/*}',
+            DiscoveryUrlGenerator::BINDING_TYPE,
+            array(
+                DiscoveryUrlGenerator::SERVER_PARAMETER => 'localhost',
+                DiscoveryUrlGenerator::PATH_PARAMETER => '/css',
+            )
+        );
+
+        $this->discovery->expects($this->once())
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
+            ->willReturn(array($binding));
+
+        $this->assertSame('path/style.css', $this->generator->generateUrl('/path/path/style.css', 'http://example.com/css'));
+    }
+
+    /**
+     * @expectedException \Puli\UrlGenerator\Api\CannotGenerateUrlException
+     * @expectedExceptionMessage Cannot generate URL for "/path/path/style.css" to current url "/".
+     * @covers \Puli\UrlGenerator\DiscoveryUrlGenerator::generateUrl
+     */
+    public function testMakeRelativeFails()
+    {
+        $binding = new ResourceBinding(
+            '/path{,/**/*}',
+            DiscoveryUrlGenerator::BINDING_TYPE,
+            array(
+                DiscoveryUrlGenerator::SERVER_PARAMETER => 'localhost',
+                DiscoveryUrlGenerator::PATH_PARAMETER => '/css',
+            )
+        );
+
+        $this->discovery->expects($this->once())
+            ->method('findBindings')
+            ->with(DiscoveryUrlGenerator::BINDING_TYPE)
+            ->willReturn(array($binding));
+
+        $this->generator->generateUrl('/path/path/style.css', '/');
+    }
 }
