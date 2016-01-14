@@ -8,7 +8,7 @@ The Puli URL Generator Component
 [![Total Downloads](https://poser.pugx.org/puli/url-generator/downloads.svg)](https://packagist.org/packages/puli/url-generator)
 [![Dependency Status](https://www.versioneye.com/php/puli:url-generator/1.0.0/badge.svg)](https://www.versioneye.com/php/puli:url-generator/1.0.0)
 
-Latest release: [1.0.0-beta3](https://packagist.org/packages/puli/url-generator#1.0.0-beta3)
+Latest release: [1.0.0-beta4](https://packagist.org/packages/puli/url-generator#1.0.0-beta4)
 
 PHP >= 5.3.9
 
