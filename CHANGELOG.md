@@ -1,6 +1,12 @@
 Changelog
 =========
 
+* 1.0.0-beta4 (2016-01-14)
+
+ * upgraded to webmozart/glob 4.0 for better performance
+ * generating relative URLs now if `$currentUrl` is passed to
+   `DiscoveryUrlGenerator::generateUrl()`
+
 * 1.0.0-beta3 (2015-10-05)
 
  * adapted to changed puli/discovery API
