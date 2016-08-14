@@ -12,8 +12,8 @@
     ],
     "require": {
         "php": "^5.3.9|^7.0",
-        "puli/repository": "^1.0-beta9@dev,<1.1",
-        "puli/discovery": "^1.0.0-beta9@dev",
+        "puli/repository": "^1.0-beta10@dev,<1.1",
+        "puli/discovery": "^1.0.0-beta10@dev",
         "webmozart/glob": "^4.0",
         "webmozart/path-util": "^2.3"
     },
