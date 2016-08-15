@@ -16,8 +16,8 @@ use PHPUnit_Framework_TestCase;
 use Puli\Discovery\Api\Discovery;
 use Puli\Discovery\Api\Type\BindingParameter;
 use Puli\Discovery\Api\Type\BindingType;
-use Puli\Discovery\Binding\ResourceBinding;
 use Puli\Repository\Api\ResourceCollection;
+use Puli\Repository\Discovery\ResourceBinding;
 use Puli\Repository\Resource\Collection\ArrayResourceCollection;
 use Puli\Repository\Resource\GenericResource;
 use Puli\UrlGenerator\DiscoveryUrlGenerator;
@@ -29,6 +29,8 @@ use Puli\UrlGenerator\DiscoveryUrlGenerator;
  */
 class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 {
+    const RESOURCE_BINDING = 'Puli\Repository\Discovery\ResourceBinding';
+
     /**
      * @var PHPUnit_Framework_MockObject_MockObject|Discovery
      */
@@ -56,7 +58,7 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
             'localhost' => '/%s',
             'example.com' => 'https://example.com/%s',
         ));
-        $this->bindingType = new BindingType(DiscoveryUrlGenerator::BINDING_TYPE, array(
+        $this->bindingType = new BindingType(DiscoveryUrlGenerator::BINDING_TYPE, self::RESOURCE_BINDING, array(
             new BindingParameter(DiscoveryUrlGenerator::SERVER_PARAMETER),
             new BindingParameter(DiscoveryUrlGenerator::PATH_PARAMETER),
         ));

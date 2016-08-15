@@ -13,7 +13,7 @@ namespace Puli\UrlGenerator;
 
 use InvalidArgumentException;
 use Puli\Discovery\Api\Discovery;
-use Puli\Discovery\Binding\ResourceBinding;
+use Puli\Repository\Discovery\ResourceBinding;
 use Puli\UrlGenerator\Api\CannotGenerateUrlException;
 use Puli\UrlGenerator\Api\UrlGenerator;
 use Webmozart\Glob\Glob;
