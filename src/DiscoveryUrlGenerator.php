@@ -77,6 +77,7 @@ class DiscoveryUrlGenerator implements UrlGenerator
             /** @var ResourceBinding $binding */
             if (Glob::match($repositoryPath, $binding->getQuery())) {
                 $matchedBinding = $binding;
+
                 break;
             }
         }

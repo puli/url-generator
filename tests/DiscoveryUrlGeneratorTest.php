@@ -11,8 +11,7 @@
 
 namespace Puli\UrlGenerator\Tests;
 
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Puli\Discovery\Api\Discovery;
 use Puli\Discovery\Api\Type\BindingParameter;
 use Puli\Discovery\Api\Type\BindingType;
@@ -27,12 +26,12 @@ use Puli\UrlGenerator\DiscoveryUrlGenerator;
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
+class DiscoveryUrlGeneratorTest extends TestCase
 {
     const RESOURCE_BINDING = 'Puli\Repository\Discovery\ResourceBinding';
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject|Discovery
+     * @var PHPUnit\Framework\MockObject\MockObject|Discovery
      */
     private $discovery;
 
@@ -53,7 +52,8 @@ class DiscoveryUrlGeneratorTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->discovery = $this->getMock('Puli\Discovery\Api\Discovery');
+        $this->discovery = $this->getMockBuilder('Puli\Discovery\Api\Discovery');
+        $this->discovery = $this->discovery->getMock();
         $this->generator = new DiscoveryUrlGenerator($this->discovery, array(
             'localhost' => '/%s',
             'example.com' => 'https://example.com/%s',
